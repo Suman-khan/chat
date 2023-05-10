@@ -1,6 +1,5 @@
-
-import React, { useState } from 'react';
-import { PrettyChatWindow } from "react-chat-engine-pretty";
+import { useState, useEffect } from 'react';
+import { PrettyChatWindow } from 'react-chat-engine-pretty';
 import SearchBot from './SearchBot';
 
 const ChatsPage = (props) => {
@@ -13,14 +12,18 @@ const ChatsPage = (props) => {
     setFilteredMessages(filtered);
   };
 
+  useEffect(() => {
+    setFilteredMessages(props.messages);
+  }, [props.messages]);
+
   return (
     <div className="background">
-      <SearchBot messages={props.messages} onSearch={handleSearch} />
+      <SearchBot messages={props.messages} filteredMessages={filteredMessages} onSearch={handleSearch} />
       <PrettyChatWindow
-        projectId='7d7e96e2-6a42-4e8f-a5e9-ecfeb6408d01'
+        projectId='27f9bfe4-b8cf-45e1-90ed-24586ccfba1b'
         username={props.user.username}
         secret={props.user.secret}
-        messages={filteredMessages.length > 0 ? filteredMessages : props.messages}
+        messages={filteredMessages}
       />
     </div>
   );
